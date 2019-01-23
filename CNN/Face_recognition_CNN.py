@@ -28,19 +28,15 @@ else:
     input_shape = (img_width, img_height, 1)
 
 model = Sequential()
-#model.add(ZeroPadding2D((1,1),input_shape=input_shape))
 model.add(Conv2D(64, (3, 3), activation='relu', input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2,2)))
 
-#model.add(ZeroPadding2D((1,1)))
 model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2,2)))
 
-#model.add(ZeroPadding2D((1,1)))
 model.add(Conv2D(256, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2,2)))
 
-#model.add(ZeroPadding2D((1,1)))
 model.add(Conv2D(512, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2,2)))
 
@@ -65,7 +61,6 @@ train_datagen = ImageDataGenerator(rescale=1. / 255, rotation_range=20,
                                brightness_range=[0.5, 1.5])
 
 # this is the augmentation configuration we will use for testing:
-# only rescaling
 test_datagen = ImageDataGenerator(rescale=1. / 255, rotation_range=20,
                                width_shift_range=0.1,
                                height_shift_range=0.1,
