@@ -33,7 +33,7 @@ class Server:
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.buffer_size = buffer_size
         self.parent_path = str(pathlib.Path(__file__).parent)
-        self.model_path = self.parent_path + '\model\\BobbyAsianWestern.h5'
+        self.model_path = self.parent_path + '\model\\BobbyAWAlexnet.h5'
         self.filepath = self.parent_path + '\server\\'
         self.model = load_model(self.model_path)
         self.model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
@@ -96,7 +96,7 @@ class Server:
                                 print(str(who[0] * 100) + "% similar to Bobby Lee")
                                 sock.send('yes,BobbyLee,112233,123456'.encode())
                             else:
-                                print("Not Bobby Lee but is similar to class " + str(who[3]))
+                                print("Not Bobby Lee but is similar to other class")
                                 sock.send('no,null,null,null'.encode())
                             self.imagescounter += 1 
                             sock.shutdown(socket.SHUT_RDWR)             
@@ -108,8 +108,8 @@ class Server:
     
     def identifyBobbyFace(self, facedir):
         detection = []
-        img_width,img_height = 150, 150
-        img = load_img(facedir, target_size=(img_width,img_height), color_mode = 'grayscale')
+        img_width,img_height = 224, 224
+        img = load_img(facedir, target_size=(img_width,img_height))#, color_mode = 'grayscale')
         img = np.array(img).astype('float32')/255 #normalization to 0 and 1, because preprocessing do this
         x = img_to_array(img)
         x = np.expand_dims(x, axis=0)
